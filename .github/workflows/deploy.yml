@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -26,8 +27,12 @@ jobs:
           MONGO_URI: ${{secrets.MONGO_URI}}
           SECRET_KEY: ${{secrets.SECRET_KEY}}
         run: |
+          # Add the SSH server's key to known_hosts
           ssh-keyscan -H $HOST >> ~/.ssh/known_hosts
+
+          # Deploy the app on the server
           ssh $USER@$HOST "
+            # Clone or pull latest code
             if [ ! -d $APP_DIR ]; then
               mkdir -p $APP_DIR
               git clone https://github.com/munisbek11/imtihon.git $APP_DIR
@@ -36,15 +41,18 @@ jobs:
               git pull origin main
             fi
 
+            # Install dependencies
             cd $APP_DIR
             npm install
 
+            # Ensure PM2 is managing the app
             if pm2 list | grep -q 'imtihon-app'; then
-              pm2 restart imtihon-app
+              pm2 reload imtihon-app --update-env
             else
               pm2 start index.js --name imtihon-app
             fi
 
+            # Save the process list
             pm2 save
           "
         shell: bash

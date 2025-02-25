@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Term = require('../models/Term')
+require('dotenv').config();
 
 
 const connectDB = async () => {
