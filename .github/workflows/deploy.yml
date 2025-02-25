@@ -21,7 +21,7 @@ jobs:
         env:
           HOST: ${{secrets.HOST}}
           USER: ${{secrets.USERNAME}}
-          APP_DIR: emax
+          APP_DIR: /emax
           PORT: ${{secrets.PORT}}
           MONGO_URI: ${{secrets.MONGO_URI}}
           SECRET_KEY: ${{secrets.SECRET_KEY}}
