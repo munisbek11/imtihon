@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const connectDB = async () => {
 	try{
-		await mongoose.connect(process.env.DATABASE_URL).then(async () => {
+		await mongoose.connect("mongodb+srv://shomurodovmunisbek12102004:2YMWqCT59ICZCUO3@cluster0.9dutp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0").then(async () => {
 		console.log('✅Connected to MongoDB')
 		})
 	} catch(error){
