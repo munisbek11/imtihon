@@ -30,7 +30,7 @@ jobs:
           ssh $USER@$HOST "
             if [ ! -d $APP_DIR ]; then
               mkdir -p $APP_DIR
-              git clone https://github.com/munisbek11/imtohon.git $APP_DIR
+              git clone https://github.com/munisbek11/imtihon.git $APP_DIR
             else
               cd $APP_DIR
               git pull origin main
@@ -42,7 +42,7 @@ jobs:
             if pm2 list | grep -q 'imtihon-app'; then
               pm2 restart imtihon-app
             else
-              pm2 start dist/main.js --name imtihon-app
+              pm2 start index.js --name imtihon-app
             fi
 
             pm2 save
