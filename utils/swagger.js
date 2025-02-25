@@ -11,16 +11,15 @@ const options = {
     },
     servers: [
       {
-        url: 'https://munisbek.uz',
+        url: 'http://localhost:4001',
       },
     ],
 		tags: [
       { name: 'Admin', description: 'Admin panel endpointlari' },
       { name: 'Author', description: 'Mualliflar bilan ishlash' },
       { name: 'Posts', description: 'Postlar bilan ishlash' },
-      { name: 'Tags', description: 'Taglar bilan ishlash' },
       { name: 'Encyclopedia', description: 'Ensiklopediya bo‘limi' },
-      { name: 'Contacts', description: 'Aloqa uchun murojaatlar' }
+      { name: 'Contact', description: 'Aloqa uchun murojaatlar' }
     ],
 		components: {
 			securitySchemes: {
@@ -197,22 +196,6 @@ const options = {
 						}
 					}
 				},
-				Tag: {
-          type: 'object',
-          required: ['id', 'name'],
-          properties: {
-            id: {
-              type: 'integer',
-              description: 'Tagning unikal ID raqami',
-              example: 101,
-            },
-            name: {
-              type: 'string',
-              description: 'Tag nomi',
-              example: 'Texnologiya',
-            },
-          },
-        },
 				Term: {
 					type: "object",
 					properties: {

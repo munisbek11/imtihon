@@ -9,7 +9,7 @@ const PostSchema = new mongoose.Schema({
   category: { type: String, required: true },
   image: { type: String, required: false },
   content: { type: String, required: true },
-  tags: [{ type: Number }],
+  tags: [{ type: String }],
   highlighted: { type: Boolean, default: false }
 });
 

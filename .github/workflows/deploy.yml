@@ -13,16 +13,16 @@ jobs:
       - name: Setup SSH key
         run: |
           mkdir -p ~/.ssh
-          echo "${{secrets.VPS_SSH_KEY}}" > ~/.ssh/id_rsa
+          echo "${{secrets.SSH_PRIVATE_KEY}}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
         shell: bash
 
       - name: Deploy to server
         env:
-          HOST: ${{secrets.VPS_HOST}}
-          USER: ${{secrets.VPS_USERNAME}}
-          APP_DIR: ${{secrets.VPS_PROJECT_PATH}}
-          PORT: ${{secrets.VPS_PORT}}
+          HOST: ${{secrets.HOST}}
+          USER: ${{secrets.USERNAME}}
+          APP_DIR: emax
+          PORT: ${{secrets.PORT}}
           MONGO_URI: ${{secrets.MONGO_URI}}
           SECRET_KEY: ${{secrets.SECRET_KEY}}
         run: |
@@ -30,7 +30,7 @@ jobs:
           ssh $USER@$HOST "
             if [ ! -d $APP_DIR ]; then
               mkdir -p $APP_DIR
-              git clone https://github.com/bahodir373/examproject.git $APP_DIR
+              git clone https://github.com/munisbek11/imtohon.git $APP_DIR
             else
               cd $APP_DIR
               git pull origin main
@@ -39,10 +39,10 @@ jobs:
             cd $APP_DIR
             npm install
 
-            if pm2 list | grep -q 'blog-app'; then
-              pm2 restart blog-app
+            if pm2 list | grep -q 'imtihon-app'; then
+              pm2 restart imtihon-app
             else
-              pm2 start dist/main.js --name blog-app
+              pm2 start dist/main.js --name imtihon-app
             fi
 
             pm2 save
