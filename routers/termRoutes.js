@@ -60,6 +60,21 @@ termsRouter.get('/encyclopedia/letter/:letter', getTermsByLetter);
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     TermCreate:
+ *       type: object
+ *       required:
+ *         - term
+ *         - description
+ *       properties:
+ *         term:
+ *           type: string
+ *           description: "The term being added"
+ *         description:
+ *           type: string
+ *           description: "Description of the term"
+ * 
  * /encyclopedia/terms:
  *   post:
  *     summary: Create a new term
@@ -80,6 +95,7 @@ termsRouter.get('/encyclopedia/letter/:letter', getTermsByLetter);
  *         description: Missing required fields (term or description).
  */
 termsRouter.post('/encyclopedia/terms', verifyAdmin, createTerm);
+
 
 /**
  * @swagger

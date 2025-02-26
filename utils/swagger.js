@@ -11,7 +11,7 @@ const options = {
     },
     servers: [
       {
-        url: 'http://185.217.131.216:4001',
+        url: 'http://localhost:4001',
       },
     ],
 		tags: [

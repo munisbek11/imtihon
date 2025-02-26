@@ -25,6 +25,7 @@ exports.register = async (req, res, next) => {
     const newAdmin = new Admin({
       username,
       password: hashedPassword,
+      isAdmin: true
     });
 
     await newAdmin.save();

@@ -38,16 +38,6 @@ exports.createPost = async (req, res, next) => {
   try {
     const { title, category, content, tags, highlighted } = req.body;
 
-    // let imagePath = "";
-
-    // if (req.file) {
-    //   imagePath = `/uploads/${req.file.filename}`;
-    // } else {
-    //   const err = new Error("Rasm yuklanmagan");
-    //   err.statusCode = 400;
-    //   return next(err);
-    // }
-
     const newPost = new Post({
       title,
       category,

@@ -67,26 +67,35 @@ postRouter.get("/posts", getInitialPosts);
  */
 postRouter.get("/posts/:slug", getPostBySlug);
 
-const uploadDir = path.join(__dirname, '../uploads');
-
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, uploadDir);
-    },
-    filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, uniqueSuffix + path.extname(file.originalname));
-    }
-});
-
-const upload = multer({ storage });
-
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     PostCreate:
+ *       type: object
+ *       required:
+ *         - title
+ *         - content
+ *         - category
+ *       properties:
+ *         title:
+ *           type: string
+ *           description: "Title of the post"
+ *         content:
+ *           type: string
+ *           description: "Content of the post"
+ *         category:
+ *           type: string
+ *           description: "Category of the post"
+ *         tags:
+ *           type: array
+ *           items:
+ *             type: string
+ *           description: "Tags associated with the post"
+ *         highlighted:
+ *           type: boolean
+ *           description: "Whether the post is highlighted"
+ * 
  * /posts:
  *   post:
  *     summary: Create a new post
@@ -106,7 +115,8 @@ const upload = multer({ storage });
  *       400:
  *         description: Bad request.
  */
-postRouter.post("/posts", verifyAdmin, upload.single("image"), createPost);
+postRouter.post("/posts", verifyAdmin, createPost);
+
 
 /**
  * @swagger

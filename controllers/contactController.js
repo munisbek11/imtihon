@@ -1,26 +1,24 @@
 const Contact = require('../models/Contact');
 const contactValidationSchema = require('../validations/contactValidation');
 
-exports.createContact = async (req, res, next) => {
+exports.createContact = async (req, res) => {
   try {
-    const { error } = contactValidationSchema.validate(req.body, { abortEarly: false });
+    const { name, phone, email, subject, message } = req.body;
 
-    if (error) {
-      const errors = error.details.map((err) => err.message);
-      const validationError = new Error("Validatsiya xatoliklari");
-      validationError.statusCode = 400;
-      validationError.details = errors;
-      return next(validationError);
-    }
+    const contact = new Contact({ name, phone, email, subject, message });
 
-    const newContact = new Contact(req.body);
-    await newContact.save();
+    await contact.validate();
 
-    res.status(201).json({ message: 'Murojaat muvaffaqiyatli yuborildi' });
+    await contact.save();
+    res.status(201).send({ message: 'Contact successfully created' });
   } catch (err) {
-    next(err);
+    if (err.name === 'ValidationError') {
+      return res.status(400).send({ error: err.message });
+    }
+    res.status(500).send({ error: 'Internal server error' });
   }
 };
+
 
 exports.getContacts = async (req, res, next) => {
   try {

@@ -61,6 +61,44 @@ contactRouter.get('/contacts/:id', verifyAdmin, getContact);
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     ContactCreate:
+ *       type: object
+ *       required:
+ *         - name
+ *         - phone
+ *         - email
+ *         - subject
+ *         - message
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: The name of the contact.
+ *           minLength: 3
+ *           maxLength: 100
+ *           example: "John Doe"
+ *         phone:
+ *           type: string
+ *           description: The phone number of the contact.
+ *           example: 123456789
+ *         email:
+ *           type: string
+ *           description: The email address of the contact.
+ *           pattern: ^\S+@\S+\.\S+$
+ *           example: "john.doe@example.com"
+ *         subject:
+ *           type: string
+ *           description: The subject of the contact message.
+ *           enum: [Taklif, Tanqid, Shikoyat]
+ *           example: "Taklif"
+ *         message:
+ *           type: string
+ *           description: The message content.
+ *           minLength: 10
+ *           maxLength: 1000
+ *           example: "Hello, I would like to inquire about your services."
+ * 
  * /contacts:
  *   post:
  *     summary: Create a new contact
@@ -71,29 +109,16 @@ contactRouter.get('/contacts/:id', verifyAdmin, getContact);
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *                 description: The name of the contact.
- *               email:
- *                 type: string
- *                 description: The email address of the contact.
- *               message:
- *                 type: string
- *                 description: The message of the contact.
- *             required:
- *               - name
- *               - email
- *               - message
+ *             $ref: '#/components/schemas/ContactCreate'
  *     responses:
  *       201:
  *         description: Contact successfully created.
  *       400:
- *         description: Validation error.
+ *         description: Validation error (missing required fields or invalid format).
  *       500:
  *         description: Internal server error.
  */
 contactRouter.post('/contacts', createContact);
+
 
 module.exports = contactRouter;
